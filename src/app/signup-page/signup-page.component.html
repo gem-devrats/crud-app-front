@@ -1,0 +1,49 @@
+<section class="banner">
+    <h1>Contact Manager</h1>
+    <div class="card border-primary mb-2 mx-auto login_card">
+        <h5 class="card-header">Create Account</h5>
+        <div class="card-body">
+            <div *ngIf="emailAlreadyRegistered"
+                        class="invalid-feedback">Email is already registered</div>
+            <form [formGroup]="signup" class="form">
+                <div class="mb-2">
+                    <label for="examplename" class="form-label">Name</label>
+                    <input type="text" id="examplename" name="name" class="form-control"
+                        placeholder="Name" required autocomplete="off" formControlName="name">
+                    <div *ngIf="signup.get('name')?.invalid && signup.get('name')?.touched"
+                        class="invalid-feedback">Please provide valid name</div>
+                </div>
+                <div class="mb-2">
+                    <label for="exampleInputEmail1" class="form-label">Email</label>
+                    <input type="email" id="exampleInputEmail1" name="email" class="form-control"
+                        placeholder="Email" required autocomplete="off" formControlName="email">
+                    <div *ngIf="signup.get('email')?.invalid && signup.get('email')?.touched"
+                        class="invalid-feedback">Please provide valid username</div>
+                </div>
+                <div class="mb-2">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" name="password" placeholder="Password" class="form-control"
+                        id="exampleInputPassword1" formControlName="password">
+                    <div *ngIf="signup.get('password')?.invalid && signup.get('password')?.touched"
+                        class="invalid-feedback">Please provide valid password</div>
+                </div>
+                <div class="mb-2">
+                    <label for="exampleInputPassword2" class="form-label">Confirm Password</label>
+                    <input type="password" name="password" placeholder="Password" class="form-control"
+                        id="exampleInputPassword2" formControlName="confirmPassword">
+                    <div *ngIf="signup.get('confirmPassword')?.invalid && signup.get('confirmPassword')?.touched"
+                        class="invalid-feedback">Password doesn't match</div>
+                </div>
+                <div class="container text-center">
+
+                    <button type="submit"
+                    (click)="signUp()"
+                        [disabled]="signup.get('userName')?.invalid || signup.get('password')?.invalid || signup.get('confirmPassword')?.invalid"
+                        class="btn btn-primary login_bot rounded-pill">Sign Up</button>
+                    &nbsp; &nbsp; &nbsp;
+                    <button (click)="loginNavigation()" type="button" class="rounded-pill btn btn-warning login_bot">Log In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,162 @@
+<div class="container">
+    <div class="card mt-5">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Number</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of contactData; let i = index">
+                <th scope="row">{{i+1}}</th>
+                <td>{{item['name']}}</td>
+                <td>{{item['email']}}</td>
+                <td>{{item['mobile']|json}}</td>
+                <td>
+                  <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1" (click)="genrateContactId(item['_id'])">Edit</button> &nbsp;
+                  <button class="btn btn-success" data-toggle="modal" data-target="#exampleModal2" (click)="genrateEmail(item['email'])">Contact</button> &nbsp;
+                  <button class="btn btn-danger" (click)="deleteContact(item['_id'])">Delete</button> &nbsp;
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="btn btn-success" data-toggle="modal" data-target="#exampleModal3">Add new</button>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Conatct</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="edit" class="form">
+          <div class="mb-2">
+              <label for="examplename" class="form-label">Name</label>
+              <input type="text" id="examplename" name="name" class="form-control"
+                  placeholder="Name" required autocomplete="off" formControlName="name">
+              <div *ngIf="edit.get('name')?.invalid && edit.get('name')?.touched"
+                  class="invalid-feedback">Please provide valid name</div>
+          </div>
+          <div class="mb-2">
+              <label for="exampleInputEmail1" class="form-label">Email</label>
+              <input type="email" id="exampleInputEmail1" name="email" class="form-control"
+                  placeholder="Email" required autocomplete="off" formControlName="email">
+              <div *ngIf="edit.get('email')?.invalid && edit.get('email')?.touched"
+                  class="invalid-feedback">Please provide valid username</div>
+          </div>
+          <div class="mb-2">
+              <label for="exampleInputnumber" class="form-label">Mobile Number</label>
+              <input type="number" name="password" placeholder="Mobile Number" class="form-control"
+                  id="exampleInputnumber" formControlName="mobile">
+              <div *ngIf="edit.get('mobile')?.invalid && edit.get('mobile')?.touched"
+                  class="invalid-feedback">Please provide valid password</div>
+          </div>
+          <div class="container text-center">
+
+              <button type="submit"
+              (click)="updateContact()"
+                  [disabled]="edit.get('userName')?.invalid || edit.get('password')?.invalid"
+                  class="btn btn-primary login_bot rounded-pill">Update Contact</button>
+          </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Chat to Contact</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="mail" class="form">
+          <div class="mb-2">
+              <label for="examplesubject" class="form-label">Subject</label>
+              <input type="text" id="examplesubject" name="name" class="form-control"
+                  placeholder="Subject" required autocomplete="off" formControlName="subject">
+          </div>
+          <div class="mb-2">
+              <label for="exampleInputMessage" class="form-label">Message</label>
+              <input type="text" id="exampleInputMessage" name="email" class="form-control"
+                  placeholder="Message" required autocomplete="off" formControlName="message">
+          </div>
+          <div class="container text-center">
+
+              <button type="submit"
+              (click)="sendMail()"
+                  class="btn btn-primary login_bot rounded-pill">Send Mail</button>
+          </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">createConatct</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="edit" class="form">
+          <div class="mb-2">
+              <label for="examplename" class="form-label">Name</label>
+              <input type="text" id="examplename" name="name" class="form-control"
+                  placeholder="Name" required autocomplete="off" formControlName="name">
+              <div *ngIf="edit.get('name')?.invalid && edit.get('name')?.touched"
+                  class="invalid-feedback">Please provide valid name</div>
+          </div>
+          <div class="mb-2">
+              <label for="exampleInputEmail1" class="form-label">Email</label>
+              <input type="email" id="exampleInputEmail1" name="email" class="form-control"
+                  placeholder="Email" required autocomplete="off" formControlName="email">
+              <div *ngIf="edit.get('email')?.invalid && edit.get('email')?.touched"
+                  class="invalid-feedback">Please provide valid username</div>
+          </div>
+          <div class="mb-2">
+              <label for="exampleInputnumber" class="form-label">Mobile Number</label>
+              <input type="number" name="password" placeholder="Mobile Number" class="form-control"
+                  id="exampleInputnumber" formControlName="mobile">
+              <div *ngIf="edit.get('mobile')?.invalid && edit.get('mobile')?.touched"
+                  class="invalid-feedback">Please provide valid password</div>
+          </div>
+          <div class="container text-center">
+
+              <button type="submit"
+              (click)="createConatct()"
+                  [disabled]="edit.get('userName')?.invalid || edit.get('password')?.invalid"
+                  class="btn btn-primary login_bot rounded-pill">Create Contact</button>
+          </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

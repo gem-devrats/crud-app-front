@@ -1,0 +1,35 @@
+<section class="banner">
+    <h1>Contact Manger</h1>
+    <div class="card border-primary mb-2 mx-auto login_card">
+        <h5 class="card-header">Login to your account</h5>
+        <div class="card-body">
+            <div *ngIf="isPasswordCorrect"
+                        class="invalid-feedback">Invalid email or password</div>
+            <form [formGroup]="login" class="form" (submit)="logIn()">
+                <div class="mb-2">
+                    <label for="exampleInputEmail1" class="form-label">Email</label>
+                    <input type="email" id="exampleInputEmail1" name="email" class="form-control"
+                        placeholder="Email" required autocomplete="off" formControlName="email">
+                    <div *ngIf="login.get('email')?.invalid && login.get('email')?.touched"
+                        class="invalid-feedback">Please provide valid username</div>
+                </div>
+                <div class="mb-2">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" name="password" placeholder="Password" class="form-control"
+                        id="exampleInputPassword1" formControlName="password">
+                    <div *ngIf="login.get('password')?.invalid && login.get('password')?.touched"
+                        class="invalid-feedback">Please provide valid password</div>
+                </div>
+                <div class="container text-center mt-2">
+
+                    <button type="submit"
+                        [disabled]="login.get('userName')?.invalid || login.get('password')?.invalid"
+                        class="btn btn-primary login_bot rounded-pill">Login</button>
+                    &nbsp; &nbsp; &nbsp;
+                    <button (click)="signupNavigation()" type="button" class="rounded-pill btn btn-warning login_bot">Sign
+                        Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
