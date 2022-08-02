@@ -127,6 +127,16 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  getSheet(){
+    axios.get('http://localhost:3000/sheet',this.config)
+    .then((response:any) =>{
+      console.log(response.data);
+    })
+    .catch((error:any) => {
+      console.log(error);
+    });
+  }
+
   ngOnInit(): void {
     axios.get('http://localhost:3000/dashboard',this.config)
     .then((response:any) =>{
